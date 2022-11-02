@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ran-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ran-operator
+  template:
+    metadata:
+      labels:
+        name: ran-operator
+    spec:
+      serviceAccountName: ran-operator
+      containers:
+        - name: ran-operator
+          # Replace this with the built image name
+          image: REPLACE_IMAGE
+          command:
+          - ran-operator
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "ran-operator"
