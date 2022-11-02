@@ -1,0 +1,71 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: ranslice.bans.io
+spec:
+  group: bans.io
+  names:
+    kind: Ranslice
+    listKind: RansliceList
+    plural: ranslice
+    singular: ranslice
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      description: Ranslice is the Schema for the ranslice API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: RansliceSpec defines the desired state of Ranslice
+          properties:
+            amfDomainName:
+              type: string
+            cuDomainName:
+              description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+                Important: Run "operator-sdk generate k8s" to regenerate code after
+                modifying this file Add custom validation using kubebuilder tags:
+                https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html'
+              type: string
+            duDomainName:
+              type: string
+          required:
+          - amfDomainName
+          - cuDomainName
+          - duDomainName
+          type: object
+        status:
+          description: RansliceStatus defines the observed state of Ranslice
+          properties:
+            cuAddr:
+              description: CU address
+              type: string
+            duAddr:
+              description: DU address
+              type: string
+            state:
+              description: State of RAN slice
+              type: string
+          required:
+          - cuAddr
+          - duAddr
+          - state
+          type: object
+      type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true

@@ -1,0 +1,7 @@
+apiVersion: bans.io/v1alpha1
+kind: Ranslice
+metadata:
+  name: example-ranslice
+spec:
+  # Add fields here
+  size: 3
